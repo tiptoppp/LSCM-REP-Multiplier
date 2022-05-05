@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"LSCM REP Multiplier"</Description>
+      <Options moHideChildren="1"/>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+[ENABLE]
+[DISABLE]
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>386148</ID>
+          <Description>"LSCM multiplier"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>GA(262145+31299)</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>386149</ID>
+          <Description>"LSCM Track multiplier"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>GA(262145+31300)</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>386147</ID>
+          <Description>"Head 2 Head multiplier"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>GA(262145+31297)</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>386142</ID>
+          <Description>"Scramble multiplier"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>GA(262145+31296)</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>386141</ID>
+          <Description>"Pursuit Race multiplier"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>GA(262145+31295)</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>386140</ID>
+          <Description>"Street Race multiplier"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>GA(262145+31294)</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <LuaScript>if GlobalPTR==nil then
+    if not openProcess('GTA5.exe') then sleep(250) if getOpenedProcessID()==0 then getAutoAttachList().add('GTA5.exe') sleep(250) end end
+    autoAssemble([[
+    aobscanmodule(GlobalPTR,GTA5.exe,4C 8D 05 ? ? ? ? 4D 8B 08 4D 85 C9 74 11)
+    registerSymbol(GlobalPTR)]])
+    GlobalPTR=getAddress('GlobalPTR');GlobalPTR=GlobalPTR+readInteger(GlobalPTR+3)+7
+    unregisterSymbol('GlobalPTR') registerSymbol('GlobalPTR',GlobalPTR,true)
+end
+function GA(Index) local p=getAddress('GlobalPTR') if not p then return end return readQword(p+(8*(Index&gt;&gt;0x12&amp;0x3F)))+(8*(Index&amp;0x3FFFF)) end
+function SG(Type,Index,Value)
+    if Type=="i" then writeInteger(GA(Index),Value)
+    elseif Type=="f" then writeFloat(GA(Index),Value)
+    elseif Type=="s" then writeString(GA(Index),Value)
+    else return "NULL" end
+end
+function GG(Type,Index)
+    if Type=="i" then return readInteger(GA(Index))
+    elseif Type=="f" then return readFloat(GA(Index))
+    elseif Type=="s" then return readString(GA(Index))
+    else return "NULL" end
+end
+</LuaScript>
+</CheatTable>
