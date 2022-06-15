@@ -1,4 +1,4 @@
-## LSCM REP Multiplier 1.59
+## LSCM REP Multiplier 1.59 (Still works after 1.60 update)
 *Rep Booster GTA V Online v1.58 by boredom1234 updated to LSCM REP Multiplier 1.59 by tiptoppp*
 
 It's a REP Multiplier created with Cheat Engine for the Los Santos Car Meet. It allows you to multiply the reputation earned after an activity or by being AFK.
